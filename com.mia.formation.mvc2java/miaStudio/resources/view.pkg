@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="view" METAMODEL="MVC" NUMBER="12"
+>
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.2.0"/>
+	<SCENARIO NAME="ScenarioView" VISIBILITY="public" META_OBJECT="View" CATEGORY="default">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="View"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="view" META_OBJECT="View" CATEGORY="default" NAME="IView" PARAM_COUNT="0"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="view" META_OBJECT="View" CATEGORY="default" NAME="View" PARAM_COUNT="0"/>
+	</SCENARIO>
+	<SCRIPT NAME="ActionsViewDeclaration" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+public void [[name]]();
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ActionsViewImplementation" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+public void [[name]](){
+		this.controler.[[name]]();
+	}
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ActionsViewInit" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+private Button btn[[name]];
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="btnCreateContents" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+btn[[name]] = new Button(grpButtons, SWT.NONE);
+		btn[[name]].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		btn[[name]].setText("[[name]]");
+		btn[[name]].addSelectionListener(new SelectionAdapter(){
+		        public void widgetSelected(SelectionEvent event)
+		        {
+		          [[name]]();
+		        }
+			});
+		
+		
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ConstructorView" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+/**
+	 * Create the shell.
+	 * @param display
+	 */
+	public [[model.name]]View(Display display, com.mia.banque.model.I[[model.name]] model, I[[model.name]]Controler controler) {
+		super(display, SWT.SHELL_TRIM);
+		this.model = model;
+		this.controler = controler;
+		
+		createContents();
+	}
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="CreateContents" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+private void createContents(){
+		setText("Vue [[model.name]]");
+		setSize(458, 308);
+		setLayout(new GridLayout(2, false));
+		
+		[[model.properties.LabelsCreateContents]]
+		[[model.ownedElements.ListCreateContents]]
+		
+		Group grpButtons = new Group(this, SWT.NONE);
+		grpButtons.setLayout(new GridLayout(2, false));
+		grpButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		[[actions.btnCreateContents]]
+	}
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="IView" META_OBJECT="View" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.ui.view;
+
+public interface I[[model.name]]View {
+
+	[[actions.ActionsViewDeclaration]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="IView$Filename" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/ui/view/I[[model.name]]View.java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ImportsView" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Group;
+
+import com.mia.banque.ui.controler.I[[model.name]]Controler;
+import com.mia.banque.ui.view.I[[model.name]]View;
+import com.mia.banque.model.I[[model.name]];
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="VariablesViewImplementation" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+private I[[model.name]]Controler controler;
+	private I[[model.name]] model;
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="View" META_OBJECT="View" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.ui.view.swt;
+
+[[ImportsView]]
+
+public class [[model.name]]View extends Shell implements I[[model.name]]View {
+
+	[[VariablesViewImplementation]]
+	[[actions.ActionsViewInit]]
+	[[model.ownedElements.ListViewInit]]
+	
+	[[ConstructorView]]
+	
+	[[actions.ActionsViewImplementation]]
+	[[CreateContents]]
+	
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
+	}
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="View$Filename" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/ui/view/swt/[[model.name]]View.java
+]]></TEXT>
+	</SCRIPT>
+</PACKAGE>

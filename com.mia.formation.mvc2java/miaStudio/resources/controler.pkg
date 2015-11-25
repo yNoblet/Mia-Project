@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="controler" METAMODEL="MVC" NUMBER="9"
+>
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.2.0"/>
+	<SCENARIO NAME="ScenarioControler" VISIBILITY="public" META_OBJECT="View" CATEGORY="default">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="View"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="controler" META_OBJECT="View" CATEGORY="default" NAME="IControler" PARAM_COUNT="0"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="controler" META_OBJECT="View" CATEGORY="default" NAME="Controler" PARAM_COUNT="0"/>
+	</SCENARIO>
+	<SCRIPT NAME="ActionsControlerDeclaration" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+public void [[name]]();
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ActionsControlerImplementation" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+public void [[name]](){
+// Start of user code for [[name]]
+
+// End of user code for [[name]]
+	}
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ConstructorControler" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+public [[model.name]]Controler(com.mia.banque.model.I[[model.name]] model) {
+		this.model = model;
+	}
+	
+	public void initView() {
+		Display display = Display.getDefault();
+
+		this.view = new [[model.name]]View(display, this.model, this);
+		this.view.open();
+		this.view.layout();
+		
+		while (!this.view.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+
+	}
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="Controler" META_OBJECT="View" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.ui.controler.swt;
+
+[[ImportsControler]]
+
+public class [[model.name]]Controler implements I[[model.name]]Controler {
+
+	[[VariablesControler]]
+	
+	[[ConstructorControler]]
+	
+	[[actions.ActionsControlerImplementation]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="Controler$Filename" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/ui/controler/swt/[[model.name]]Controler.java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="IControler" META_OBJECT="View" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.ui.controler;
+
+public interface I[[model.name]]Controler {
+	
+	public void initView();
+	
+	[[actions.ActionsControlerDeclaration]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="IControler$Filename" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/ui/controler/I[[model.name]]Controler.java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ImportsControler" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Group;
+
+import com.mia.banque.ui.controler.I[[model.name]]Controler;
+import com.mia.banque.ui.view.I[[model.name]]View;
+import com.mia.banque.ui.view.swt.[[model.name]]View;
+import com.mia.banque.model.I[[model.name]];
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="VariablesControler" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+private [[model.name]]View view;
+	private I[[model.name]] model;
+	
+]]></TEXT>
+	</SCRIPT>
+</PACKAGE>

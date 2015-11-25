@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="model" METAMODEL="MVC" NUMBER="13"
+>
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.2.0"/>
+	<SCENARIO NAME="scModels" VISIBILITY="public" META_OBJECT="Model" CATEGORY="default">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="Model"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="model" META_OBJECT="Model" CATEGORY="default" NAME="IModel" PARAM_COUNT="0"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="model" META_OBJECT="Model" CATEGORY="default" NAME="Model" PARAM_COUNT="0"/>
+	</SCENARIO>
+	<SCRIPT NAME="IListDeclaration" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+public List<I[[name@¤] get[[name]]s();
+	public void set[[name]]s(List<I[[name@¤] newValue);
+
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="IModel" META_OBJECT="Model" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.model;
+
+import java.util.List;
+
+public interface I[[name]] {
+	[[properties.GetterSetterDeclaration]]
+	[[ownedElements.IListDeclaration]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="IModel$Filename" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/model/I[[name]].java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ImportsModel" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+import java.util.List;
+import java.util.ArrayList;
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ListCreateContents" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+// Liste
+		Group grp[[name]] = new Group(this, SWT.NONE);
+		grp[[name]].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grp[[name]].setText("Liste des [[name]]s");
+		grp[[name]].setLayout(new GridLayout());
+
+		this.[[name]]List = new List(grp[[name]], SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+		this.[[name]]List.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		for (final com.mia.banque.model.I[[name]] elt : this.model.get[[name]]s()) {
+			this.[[name]]List.add(elt.toString());
+		}
+		
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ListImplementation" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+private List<com.mia.banque.model.I[[name@¤] list[[name]];
+
+	public List<com.mia.banque.model.I[[name@¤] get[[name]]s() {
+		if (this.list[[name]] == null) {
+			this.list[[name]] = new ArrayList<com.mia.banque.model.I[[name@¤]();
+		}
+		return this.list[[name]];
+	}
+		
+	public void set[[name]]s(List<com.mia.banque.model.I[[name@¤] newValue) {
+		this.list[[name]] = newValue;
+	}
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ListViewInit" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+public List [[name]]List;
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="Model" META_OBJECT="Model" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.model.impl;
+
+[[ImportsModel]]
+
+public class [[name]] implements com.mia.banque.model.I[[name]]{
+	[[properties.VariableDeclaration]]
+	[[properties.GetterSetterImplementation]]
+	[[ownedElements.ListImplementation]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="Model$Filename" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/model/impl/[[name]].java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="GetterSetterDeclaration" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+public String get[[name]]();
+	public void set[[name]](String newValue);
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="GetterSetterImplementation" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+public String get[[name]]() {
+		return this.[[name]];
+	}
+
+	public void set[[name]](String newValue) {
+		this.[[name]] = newValue;
+	}
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="LabelsCreateContents" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+Label lbl[[name]] = new Label(this, SWT.NONE);
+		lbl[[name]].setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false,
+				1, 1));
+		lbl[[name]].setText("[[name]]");
+
+		Text [[name]]Field = new Text(this, SWT.BORDER);
+		[[name]]Field.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+		[[name]]Field.setText(this.model.get[[name]]());
+		
+		
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="VariableDeclaration" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+private String [[name]];
+	
+]]></TEXT>
+	</SCRIPT>
+</PACKAGE>
